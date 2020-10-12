@@ -1,0 +1,22 @@
+server:
+  forward-headers-strategy: framework
+  error:
+    include-message: always
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: off
+  application:
+    name: issue-report
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    mapper:
+      accept-case-insensitive-enums: true
+  datasource:
+    hikari:
+      initialization-fail-timeout: -1
+    url: jdbc:postgresql://localhost:5432/issue_report
+    password: issue_report1234
+    username: issue_report
+    driver-class-name: org.postgresql.Driver

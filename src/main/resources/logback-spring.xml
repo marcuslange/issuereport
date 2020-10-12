@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender" >
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <timeZone>UTC</timeZone>
+                </timestamp>
+                <pattern>
+                    <omitEmptyFields>true</omitEmptyFields>
+                    <pattern>
+                        {
+                        "service": "${springAppName:-}",
+                        "traceId": "%X{X-B3-TraceId:-}",
+                        "spanId": "%X{X-B3-SpanId:-}",
+                        "parentId": "%X{X-B3-ParentSpanId:-}"
+                        }
+                    </pattern>
+                </pattern>
+                <message/>
+                <loggerName>
+                    <shortenedLoggerNameLength>200</shortenedLoggerNameLength>
+                </loggerName>
+                <threadName/>
+                <logLevel/>
+                <logLevelValue/>
+                <stackTrace>
+                    <throwableConverter class="net.logstash.logback.stacktrace.ShortenedThrowableConverter">
+                        <maxDepthPerThrowable>30</maxDepthPerThrowable>
+                        <maxLength>4096</maxLength>
+                        <shortenedClassNameLength>200</shortenedClassNameLength>
+                        <exclude>brave\.servlet.*</exclude>
+                        <exclude>brave\.spring.*</exclude>
+                        <exclude>com\.fasterxml\.jackson\.databind.*</exclude>
+                        <exclude>io\.github\.resilience4j\.circuitbreaker\.CallNotPermittedException.*</exclude>
+                        <exclude>io\.github\.resilience4j\.circuitbreaker\.CircuitBreaker.*</exclude>
+                        <exclude>io\.github\.resilience4j\.circuitbreaker\.configure.*</exclude>
+                        <exclude>io\.github\.resilience4j\.circuitbreaker\.internal.*</exclude>
+                        <exclude>java\.lang\.reflect.*</exclude>
+                        <exclude>java\.lang\.Thread.</exclude>
+                        <exclude>java\.util\.concurrent\.ThreadPoolExecutor</exclude>
+                        <exclude>java\.util\.stream.*</exclude>
+                        <exclude>javax\.servlet\.http.*</exclude>
+                        <exclude>jdk\.internal\.reflect.*</exclude>
+                        <exclude>net\.sf\.cglib\.proxy\.MethodProxy\.invoke</exclude>
+                        <exclude>org\.apache\.catalina.*</exclude>
+                        <exclude>org\.apache\.coyote.*</exclude>
+                        <exclude>org\.apache\.tomcat.*</exclude>
+                        <exclude>org\.springframework\.aop\.aspectj.*</exclude>
+                        <exclude>org\.springframework\.aop\.framework.*</exclude>
+                        <exclude>org\.springframework\.aop\.interceptor.*</exclude>
+                        <exclude>org\.springframework\.boot\.actuate.*</exclude>
+                        <exclude>org\.springframework\.cglib\.proxy.*</exclude>
+                        <exclude>org\.springframework\.cloud\.aws\.messaging\.listener.*</exclude>
+                        <exclude>org\.springframework\.cloud\.sleuth.*</exclude>
+                        <exclude>org\.springframework\.cloud\.client.*</exclude>
+                        <exclude>org\.springframework\.cloud\.netflix\.ribbon.*</exclude>
+                        <exclude>org\.springframework\.context\.event.*</exclude>
+                        <exclude>org\.springframework\.http\.client.*</exclude>
+                        <exclude>org\.springframework\.http\.converter\.json.*</exclude>
+                        <exclude>org\.springframework\.messaging\.handler\.invocation\.AbstractMethodMessageHandler.*</exclude>
+                        <exclude>org\.springframework\.retry\.interceptor.*</exclude>
+                        <exclude>org\.springframework\.retry\.support.*</exclude>
+                        <exclude>org\.springframework\.scheduling.*</exclude>
+                        <exclude>org\.springframework\.security.*</exclude>
+                        <exclude>org\.springframework\.web\.client.*</exclude>
+                        <exclude>org\.springframework\.web\.filter.*</exclude>
+                        <exclude>org\.springframework\.web\.method.*</exclude>
+                        <exclude>org\.springframework\.web\.servlet.*</exclude>
+                        <exclude>sun\.reflect\..*\.invoke.*</exclude>
+                        <rootCauseFirst>true</rootCauseFirst>
+                        <inlineHash>true</inlineHash>
+                    </throwableConverter>
+                </stackTrace>
+                <throwableClassName>
+                    <useSimpleClassName>true</useSimpleClassName>
+                </throwableClassName>
+                <logstashMarkers/>
+            </providers>
+        </encoder>
+    </appender>
+    <logger name="io.pileworx" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.zaxxer.hikari.HikariDataSource" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.boot.actuate.endpoint.EndpointId" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.cloud.kubernetes.ribbon.KubernetesEndpointsServerList" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.cloud.sleuth.instrument.messaging.SqsQueueMessageHandler" level="OFF">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.cloud.aws.messaging.listener.SimpleMessageListenerContainer" level="OFF">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.amazonaws" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="io.lettuce" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.apache" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.netflix" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.netflix.config.sources" level="ERROR">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="io.github.resilience4j" level="WARN">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

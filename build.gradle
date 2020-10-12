@@ -1,0 +1,36 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'java'
+}
+
+ext {
+	springBootV = '2.3.4.RELEASE'
+	springCloudV = 'Hoxton.SR8'
+	javaxInjectV = '1'
+	lombokV = '1.18.12'
+	logstashLogbackEncoderV = '6.4'
+}
+
+group = 'io.pileworx'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation(platform("org.springframework.boot:spring-boot-dependencies:${springBootV}"))
+	implementation(platform("org.springframework.cloud:spring-cloud-dependencies:${springCloudV}"))
+	implementation('org.springframework.boot:spring-boot-starter-data-jdbc')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-hateoas')
+	implementation("javax.inject:javax.inject:${javaxInjectV}")
+	implementation("net.logstash.logback:logstash-logback-encoder:${logstashLogbackEncoderV}")
+	implementation('org.flywaydb:flyway-core')
+	compileOnly("org.projectlombok:lombok:${lombokV}")
+	runtimeOnly('org.postgresql:postgresql')
+	annotationProcessor("org.projectlombok:lombok:${lombokV}")
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
