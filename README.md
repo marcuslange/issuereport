@@ -31,11 +31,27 @@ Linux & MacOS
 The service will start up running the ***local*** profile and will be running at http://localhost:8080
 You can verify that everything is connected properly by accessing the health check at http://localhost:8080/actuator/health
 
-####Run Scenario to Cause Issue
+####Execute API
 
+Post New Issue
 ```
-curl --location --request GET 'http://localhost:8080/issue/generate'
+curl --location --request POST 'http://localhost:8080/issue' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name" : "foo",
+    "description" : "bar"
+}'
 ```
+
+Get All Issues
+```
+curl --location --request GET 'http://localhost:8080/issue'
+```
+
+Get Issue By ID (URI provided by SELF link in hypermedia)
+```
+curl --location --request GET '<INSERT SELF LINK FOR ISSUE>'
+``` 
 
 ####Stop Local Environment
 
